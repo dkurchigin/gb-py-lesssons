@@ -21,26 +21,30 @@ def print_files_on_dir(directory="."):
     print ('')
 
 
-def make_dirs(count):
-    for dir in range(1, count+1):
-        os.mkdir("dir_"+str(dir))
-    print("Директории созданы")
+def make_dir(path="."):
+    os.mkdir(path)
+    print("Создал директорию", path)
 
 
-def remove_dirs(pattern, directory="."):
-    files = os.listdir(directory)
+def remove_dirs(pattern, path="."):
+    files = os.listdir(path)
     for file in files:
         if re.match(pattern, file):
-            os.rmdir(directory + "/" + file)
-    print("Удалил все папки!")
+            remove_one_dir(path + "/" + file)
 
 
-programm_title()
-make_dirs(9)
-print_files_on_dir()
+def remove_one_dir(path="."):
+    os.rmdir(path)
+    print("Удалил директорию", path)
 
-pattern_for_rm = "^dir_[0-9]+$"
-remove_dirs(pattern_for_rm)
+if __name__ == "__main__":
+    programm_title()
+    for count in range(1, 10):
+        make_dir("dir_" + str(count))
+    print_files_on_dir()
 
-shutil.copyfile(sys.argv[0], sys.argv[0] + ".copy")
-print_files_on_dir()
+    pattern_for_rm = "^dir_[0-9]+$"
+    remove_dirs(pattern_for_rm)
+
+    shutil.copyfile(sys.argv[0], sys.argv[0] + ".copy")
+    print_files_on_dir()
