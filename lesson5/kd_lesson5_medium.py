@@ -8,6 +8,28 @@ def programm_title():
     print("**************************")
 
 
+def get_dir_for_change(current_dir):
+    print("Введите название директории, в которую хотите перейти:")
+    dir_for_change = input()
+    try:
+        os.chdir("{}/{}".format(current_dir, dir_for_change))
+    except (NotADirectoryError, FileNotFoundError):
+        print("Не могу перейти в директорию {}, её либо не существует, либо это файл, "
+              "а не директория".format(dir_for_change))
+
+
+def get_dir_for_remove(current_dir):
+    print("Введите название директирии, которую хотите удалить:")
+    dir_for_remove = input()
+    remove_one_dir("{}/{}".format(current_dir, dir_for_remove))
+
+
+def get_dir_for_create(current_dir):
+    print("Введите название директирии, которую хотите создать:")
+    dir_for_create = input()
+    make_dir("{}/{}".format(current_dir, dir_for_create))
+
+
 def commands():
     current_dir = os.getcwd()
     print("Эта программа умеет:")
@@ -18,34 +40,14 @@ def commands():
     print("Выберите действие, например, введите 2")
     try:
         command = int(input())
-
         if command == 1:
-            print("Введите название директории, в которую хотите перейти:")
-            dir_for_change = input()
-            if os.path.isdir(dir_for_change) and os.path.exists(dir_for_change):
-                dir_for_change = current_dir + "/" + dir_for_change
-                os.chdir(dir_for_change)
-            else:
-                print("Не могу удалить директорию {}, её либо не существует, либо это файл, "
-                      "а не директория".format(dir_for_remove))
+            get_dir_for_change(current_dir)
         elif command == 2:
             print_files_on_dir()
         elif command == 3:
-            print("Введите название директирии, которую хотите удалить:")
-            dir_for_remove = input()
-            if os.path.isdir(dir_for_remove) and os.path.exists(dir_for_remove):
-                dir_for_remove = current_dir + "/" + dir_for_remove
-                remove_one_dir(dir_for_remove)
-            else:
-                print("Не могу удалить директорию {}, её либо не существует, либо это файл, "
-                      "а не директория".format(dir_for_remove))
+            get_dir_for_remove(current_dir)
         elif command == 4:
-            print("Введите название директирии, которую хотите создать:")
-            dir_for_create = input()
-            if not os.path.exists(dir_for_create):
-                make_dir(current_dir + "/" + dir_for_create)
-            else:
-                print("Такая директория уже существует, придумайте другое название")
+            get_dir_for_create(current_dir)
         else:
             print("Вы ошиблись, такой команды нет...")
     except ValueError:
