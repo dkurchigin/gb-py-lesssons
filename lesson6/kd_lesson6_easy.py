@@ -1,3 +1,9 @@
+def programm_title():
+    print("************************")
+    print("*GB/Python/Lesson6/EASY*")
+    print("************************")
+
+
 class TownCar:
     def __init__(self, name="Городское авто"):
         self.name = name
@@ -60,6 +66,7 @@ class WorkCar(TownCar):
         print("{} медленно тормозит...".format(self.name))
 
 
+programm_title()
 car = TownCar("Лада Калина")
 car.go()
 car.turn("left")
@@ -80,6 +87,6 @@ car3.is_it_police()
 print("=================")
 car4 = WorkCar()
 car4.go()
-car4.turn("hz")
+car4.turn()
 car4.stop()
 car4.is_it_police()
