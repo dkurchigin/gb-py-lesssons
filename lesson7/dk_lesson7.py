@@ -192,10 +192,4 @@ class Loto:
             self.check_winner(user, pc)
 
 
-    #def check_card(self):
-
 newgame = Loto()
-# newgame.get_number()
-# newgame.get_number()
-# newgame.get_number()
-# newgame.get_number()
