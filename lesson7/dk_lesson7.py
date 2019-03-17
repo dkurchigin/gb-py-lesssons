@@ -99,15 +99,16 @@ class Card:
         else:
             self.summury_strings = elements
 
-    def show_card(self):
+    def __str__(self):
         if self.type == "player":
-            print("---------- Ваша карточка ----------")
+            player_type = "---------- Ваша карточка ----------"
         else:
-            print("------- Карточка компьютера -------")
-        print("{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.first_string))
-        print("{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.second_string))
-        print("{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.third_string))
-        print("-----------------------------------")
+            player_type = "------- Карточка компьютера -------"
+        first_str = "{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.first_string)
+        second_str = "{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.second_string)
+        third_str = "{0[0]}\t {0[1]}\t {0[2]}\t {0[3]}\t {0[4]}\t {0[5]}\t {0[6]}\t {0[7]}\t {0[8]}".format(self.third_string)
+        final = "-----------------------------------"
+        return "{}\n{}\n{}\n{}\n{}".format(player_type, first_str, second_str, third_str, final)
 
     def try_scratch_out(self, number):
         if self.type == "player":
@@ -184,8 +185,8 @@ class Loto:
 
     def _turn_by_turn(self, user, pc):
         while True:
-            user.show_card()
-            pc.show_card()
+            print(user)
+            print(pc)
             self.last_number = self.get_number()
             pc.try_scratch_out(self.last_number)
             user.try_scratch_out(self.last_number)
