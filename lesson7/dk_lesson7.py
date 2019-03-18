@@ -154,16 +154,23 @@ class Loto:
     def __init__(self):
         self.last_number = ''
         self._generate_numbers()
+        self.i = 0
+        self._bag_size = 90
         self.new_game()
 
     def _generate_numbers(self):
         self._numbers_in_bag = [element for element in range(1, 91)]
-
-    def get_number(self):
-        random.shuffle(self._numbers_in_bag)
-        remove_one = self._numbers_in_bag.pop()
-        print("Новый бочонок: {} (осталось {})".format(remove_one, len(self._numbers_in_bag)))
-        return remove_one
+        
+    def __iter__(self):
+        return self
+        
+    def __next__(self):
+        while self.i < self._bag_size:
+            random.shuffle(self._numbers_in_bag)
+            number = self._numbers_in_bag.pop()
+            self.i += 1
+            return number
+        raise StopIteration
 
     def new_game(self):
         print("Добро пожаловать в игру ЛОТО!")
@@ -184,10 +191,11 @@ class Loto:
             exit(0)
 
     def _turn_by_turn(self, user, pc):
-        while True:
+        for number in self:
             print(user)
             print(pc)
-            self.last_number = self.get_number()
+            print("Новый бочонок: {} (осталось {})".format(number, len(self._numbers_in_bag)))
+            self.last_number = number
             pc.try_scratch_out(self.last_number)
             user.try_scratch_out(self.last_number)
             self.check_winner(user, pc)
